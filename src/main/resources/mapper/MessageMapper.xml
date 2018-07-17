@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kele.message_service.dao.MessageDao">   <!-- 命名空间，名字可以随意起，只要不冲突即可 -->
+    <!-- 对象映射，可以不写 -->
+<!--
+    private String id;
+    private String userId;
+    private String content;
+    private String sentTime;
+    private int type;
+    private int likeCount = 0;
+    private int repostCount = 0;
+    private int commentCount = 0;
+    private int readCount = 0;-->
+    <!--'pk_msg_id', 'char(32)', 'NO', 'PRI', NULL, ''
+'user_id', 'varchar(20)', 'YES', 'MUL', NULL, ''
+'msg_type', 'tinyint(3) unsigned', 'NO', '', '0', ''
+'msg_content', 'varchar(300)', 'NO', '', '[empty content]', ''
+'msg_sent_time', 'timestamp', 'NO', '', 'CURRENT_TIMESTAMP', ''
+'msg_like_count', 'int(10) unsigned', 'NO', '', '0', ''
+'msg_repost_count', 'int(10) unsigned', 'NO', '', '0', ''
+'msg_comment_count', 'int(10) unsigned', 'NO', '', '0', ''
+'msg_read_count', 'int(10) unsigned', 'NO', '', '0', ''
+-->
+
+    <resultMap id="messageDao" type="com.kele.message_service.model.Message">
+        <id property="id" column="pk_msg_id" javaType="java.lang.String"></id>
+        <result property="userId" column="user_id" javaType="java.lang.String"></result>
+        <result property="type" column="msg_type" javaType="java.lang.Integer"></result>
+        <result property="content" column="msg_content" javaType="java.lang.String"></result>
+        <result property="sentTime" column="msg_sent_time" javaType="java.lang.String"></result>
+        <result property="likeCount" column="msg_like_count" javaType="java.lang.Integer"></result>
+        <result property="repostCount" column="msg_repost_count" javaType="java.lang.Integer"></result>
+        <result property="commentCount" column="msg_comment_count" javaType="java.lang.Integer"></result>
+        <result property="readCount" column="msg_read_count" javaType="java.lang.Integer"></result>
+    </resultMap>
+    <!-- 查询功能，resultType 设置返回值类型 -->
+    <!--Insert-->
+    <insert id="insertMessage" parameterType="com.kele.message_service.model.Message">
+        insert into message(pk_msg_id, user_id, msg_type, msg_content,
+         msg_like_count, msg_repost_count, msg_comment_count, msg_read_count)
+            values(#{id}, #{userId}, #{type}, #{content}, #{likeCount},
+             #{repostCount}, #{commentCount}, #{readCount})
+    </insert>
+
+
+    <!--Query-->
+    <select id="queryMessageById" parameterType="java.lang.String" resultMap="messageDao">  <!-- 书写 SQL 语句 -->
+        SELECT * FROM message where pk_msg_id = #{id}
+    </select>
+    <select id="queryAllMessage" resultMap="messageDao">
+        SELECT * FROM message
+    </select>
+    <select id="queryAllMessageByUserId" parameterType="java.lang.String" resultMap="messageDao">
+        SELECT * FROM message WHERE user_id = #{userId}
+    </select>
+
+    <!--Update-->
+    <update id="updateMessage" parameterType="com.kele.message_service.model.Message">
+        update message set pk_msg_id = #{id}, user_id = #{userId}, msg_type = #{type}, msg_content = #{content},
+         msg_like_count = #{likeCount}, msg_repost_count = #{repostCount}, msg_comment_count = #{commentCount},
+          msg_read_count = #{readCount} where pk_msg_id = #{id}
+    </update>
+
+</mapper>
