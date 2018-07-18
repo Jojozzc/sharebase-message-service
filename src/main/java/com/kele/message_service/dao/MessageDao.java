@@ -12,5 +12,5 @@ public interface MessageDao {
     public Message queryMessageById(String messageId);
     public List<Message> queryAllMessage();
     public List<Message> queryAllMessageByUserId(String userId);
-    public List<Message> queryAllOrderByTimeWithRange(@Param("0")int rangeA, @Param("1") int rangB);
+    public List<Message> queryAllOrderByTimeWithRange(@Param("0")int start, @Param("1") int offset);
 }

@@ -10,7 +10,7 @@ import org.junit.Test;
 public class SendMessage {
     @Test
     public void autoSend(){
-        int MAX = 1000;
+        int MAX = 10;
         String userId = "zzczzc";
         SqlSession sqlSession = MybatisUtil.getInstance().getSqlSession();
         MessageDao messageDao = sqlSession.getMapper(MessageDao.class);

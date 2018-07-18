@@ -77,11 +77,13 @@ public class MessageFeedService {
 
     private static List<Message> queryHot(int from, int to){
         // from和to在此转换成数据库范围
-        to++;
-        from--;
+        int start = from - 1;
+        int offset = to - from + 1;
         SqlSession sqlSession = MybatisUtil.getInstance().getSqlSession();
         MessageDao messageDao = (MessageDao) sqlSession.getMapper(MessageDao.class);
-        List<Message> result = messageDao.queryAllOrderByTimeWithRange(from, to);
+        List<Message> result = messageDao.queryAllOrderByTimeWithRange(start, offset);
+        sqlSession.commit();
+        sqlSession.close();
         return result;
     }
 }
