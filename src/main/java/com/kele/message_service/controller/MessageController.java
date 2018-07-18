@@ -3,8 +3,11 @@ package com.kele.message_service.controller;
 import com.google.gson.Gson;
 import com.kele.StatusCodeConfig;
 import com.kele.message_service.body.BaseResponseBody;
+import com.kele.message_service.model.Message;
+import com.kele.message_service.service.MessageFeedService;
 import com.kele.message_service.service.SendMessageService;
 import com.kele.message_service.utils.CookieUtil;
+import com.kele.message_service.utils.TimeUtil;
 import com.kele.message_service.utils.UUIDUtil;
 import com.kele.service.ISignInConfirm;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -18,6 +21,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.rmi.Naming;
+import java.util.List;
 import java.util.Map;
 
 // xx.xx.xx.xx/msg/send
@@ -36,7 +40,8 @@ public class MessageController {
     @PostMapping("/send")
     public void sendMsg(HttpServletRequest request, HttpServletResponse response){
         MsgResponseBody responseBody = new MsgResponseBody();
-        System.out.println();
+
+        System.out.println("message send服务");
         try{
 
             Cookie[] cookies = request.getCookies();
@@ -101,7 +106,20 @@ public class MessageController {
         }
 
     }
-    class MsgResponseBody extends BaseResponseBody{
 
+    @GetMapping("/feed")
+    public void msgFeed(HttpServletRequest request, HttpServletResponse response){
+        System.out.println("----------------查看微博---------------\n" + TimeUtil.getInstance().getNowDateAndTime());
+        MessageFeedService.msgFeed(request, response, new MsgResponseBody());
+    }
+    public class MsgResponseBody extends BaseResponseBody{
+        private List<Message> messageList = null;
+        public MsgResponseBody(){
+
+        }
+
+        public void setMessageList(List<Message> messageList) {
+            this.messageList = messageList;
+        }
     }
 }

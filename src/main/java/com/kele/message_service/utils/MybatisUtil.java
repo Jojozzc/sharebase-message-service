@@ -10,7 +10,8 @@ import java.io.InputStream;
 
 public class MybatisUtil {
     private static MybatisUtil instance = new MybatisUtil();
-    private SqlSession sqlSession;
+    private SqlSessionFactory sqlSessionFactory;
+
     private final static String SQLMAPCONFIG_PATH_LOCAL = "/media/jojo/Code/Web/message_service/src/main/resources/sqlMapConfig.xml";
     private final static String SQLMAPCONFIG_PATH_ALIYUN = "resources/sqlMapConfig.xml";
     private MybatisUtil(){
@@ -25,11 +26,10 @@ public class MybatisUtil {
                     break;
                     default: resource = SQLMAPCONFIG_PATH_ALIYUN;
             }
-            resource = SQLMAPCONFIG_PATH_ALIYUN;
+//            resource = SQLMAPCONFIG_PATH_ALIYUN;
             System.out.println("数据库配置文件路径：" + resource);
             InputStream inputStream = new FileInputStream(resource);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);    // 创建 SqlSessionFactory
-            sqlSession = sqlSessionFactory.openSession();
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);    // 创建 SqlSessionFactory
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -41,6 +41,8 @@ public class MybatisUtil {
     }
 
     public SqlSession getSqlSession() {
+        SqlSession sqlSession;
+        sqlSession = sqlSessionFactory.openSession();
         return sqlSession;
     }
 }

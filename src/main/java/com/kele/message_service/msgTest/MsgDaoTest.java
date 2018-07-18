@@ -1,9 +1,11 @@
 package com.kele.message_service.msgTest;
 
+import com.google.gson.Gson;
 import com.kele.message_service.dao.MessageDao;
 import com.kele.message_service.model.Message;
 import com.kele.message_service.utils.MybatisUtil;
 import com.kele.message_service.utils.UUIDUtil;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
@@ -22,7 +24,7 @@ public class MsgDaoTest {
         sqlSession.close();
     }
 
-    @Test
+//    @Test
     public void insertTest(){
         Message message = new Message();
         String id = UUIDUtil.getInstance().getUUID();
@@ -36,5 +38,17 @@ public class MsgDaoTest {
         sqlSession.commit();
         sqlSession.close();
         System.out.println(result);
+    }
+
+    @Test
+    public void queryMsgTest(){
+        Gson gson = new Gson();
+        SqlSession sqlSession = MybatisUtil.getInstance().getSqlSession();
+        MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
+        List<Message> messages = messageDao.queryAllOrderByTimeWithRange(0, 10);
+
+        System.out.println(gson.toJson(messages));
+
+        sqlSession.close();
     }
 }

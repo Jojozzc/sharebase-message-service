@@ -37,6 +37,7 @@
         <result property="commentCount" column="msg_comment_count" javaType="java.lang.Integer"></result>
         <result property="readCount" column="msg_read_count" javaType="java.lang.Integer"></result>
     </resultMap>
+
     <!-- 查询功能，resultType 设置返回值类型 -->
     <!--Insert-->
     <insert id="insertMessage" parameterType="com.kele.message_service.model.Message">
@@ -57,6 +58,12 @@
     <select id="queryAllMessageByUserId" parameterType="java.lang.String" resultMap="messageDao">
         SELECT * FROM message WHERE user_id = #{userId}
     </select>
+
+    <select id="queryAllOrderByTimeWithRange" resultMap="messageDao">
+        SELECT * FROM message ORDER BY msg_sent_time DESC LIMIT #{0}, #{1}
+    </select>
+
+
 
     <!--Update-->
     <update id="updateMessage" parameterType="com.kele.message_service.model.Message">

@@ -6,8 +6,10 @@ public class StatusCodeConfig {
     public static final int WRONG_PASSWORD_OR_ID = 4001;
     public static final int PARAM_LACK = 4002;
     public static final int NO_SIGNIN = 4003;
+    public static final int WRONG_PARAM = 4005;
 
     public static final int SERVER_ERROR = 5001;
+    public static final int UNKNOWN_ERROR = 5002;
 
     public static final int ALREADY_FRIEND = 6001;
     public static final int MSG_NO_EXIST = 6002;

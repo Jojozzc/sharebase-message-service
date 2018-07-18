@@ -4,7 +4,7 @@ import java.net.InetAddress;
 
 public class HostConfig {
 
-    public static final String DEFAULT_ALIYUN_HOST_NAME = "keleubt";
+    public static final String DEFAULT_ALIYUN_HOST_NAME = "localhost";
     public static final String DEFAULT_LOCAL_HOST_NAME = "kele";
     private static String hostName;
     static {

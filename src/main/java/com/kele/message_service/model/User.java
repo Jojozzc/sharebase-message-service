@@ -16,7 +16,7 @@ public class User {
 
 
     @Expose(serialize = false, deserialize = false)
-    private String password = "";
+    transient private String password = "";
     private String nickName = "";
     private String regTime = "";
     private String phone = "";

@@ -1,5 +1,6 @@
 package com.kele.message_service.model;
 
+import com.google.gson.annotations.Expose;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -8,6 +9,7 @@ import java.io.Serializable;
 @Component
 public class Message implements Serializable {
 
+//    @Expose(serialize = false, deserialize = false)
     private String id;
     private String userId;
     private String content;
